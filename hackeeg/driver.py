@@ -233,10 +233,12 @@ class HackEEGBoard:
     def send_text_command(self, command):
         self._serial_write(command + '\n')
 
-    def execute_command(self, command, parameters=None, serial_port=None):
+    def execute_command(self, command, parameters=None, serial_port=None, read_delay=None):
         if parameters is None:
             parameters = []
         self.send_command(command, parameters)
+        if read_delay is not None:
+            time.sleep(read_delay)
         response = self.read_response(serial_port=serial_port)
         return response
 
@@ -285,7 +287,7 @@ class HackEEGBoard:
         return self.send_command("text")
 
     def reset(self):
-        return self.execute_command("reset")
+        return self.execute_command("reset", read_delay=2)
 
     def start(self):
         return self.execute_command("start")

@@ -133,3 +133,6 @@ dmypy.json
 
 # Sphinx
 html/
+
+# VS Code
+.vscode
